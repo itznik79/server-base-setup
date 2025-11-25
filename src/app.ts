@@ -18,7 +18,17 @@ app.use(hpp());                 // Prevents HTTP Parameter Pollution attacks (?i
 app.use(express.json({ limit: "10mb" }));   // Body parser: allows JSON payloads up to 10mb
 app.use(express.urlencoded({ extended: true }));    // Body parser for form-data (URL-encoded)
 app.use(cors({                  //// Enables cross-origin requests (for frontend → backend communication)
-  origin: ["http://localhost:3000"], 
+  origin: ["http://localhost:3000"],
   credentials: true,
 }));
+
+//  404 Handler
+app.use((req, res) => {
+  res.status(404).json({
+    status: false,
+    message: `Route ${req.originalUrl} not found`,
+  });
+});
+
+export default app;
 
